@@ -614,12 +614,17 @@ footer{
     bubble.classList.remove('show');
     talkBtn.textContent='🔊 Hear my 20-sec intro';
   }
+  var MALE_NAMES=/male|ravi|madhur|prabhat|guy|david|mark|james|ryan|daniel|george|thomas|oliver|liam|arjun|kabir/i,
+      FEMALE_NAMES=/female|heera|neerja|swara|zira|susan|hazel|samantha|aria|jenny|sonia|libby|natasha|emma|ana|michelle|clara|eva/i;
   function pickVoice(){
-    var vs=speechSynthesis.getVoices(),v=null;
-    ['en-IN','en-GB','en-US','en'].some(function(l){
-      v=vs.find(function(x){return x.lang&&x.lang.indexOf(l)===0});return !!v;
+    var vs=speechSynthesis.getVoices();
+    var en=vs.filter(function(x){return x.lang&&x.lang.indexOf('en')===0});
+    var male=en.filter(function(x){return MALE_NAMES.test(x.name)&&!FEMALE_NAMES.test(x.name)});
+    var order=['en-IN','en-GB','en-US','en'],pool=male.length?male:en.filter(function(x){return !FEMALE_NAMES.test(x.name)}),v=null;
+    order.some(function(l){
+      v=pool.find(function(x){return x.lang.indexOf(l)===0});return !!v;
     });
-    return v;
+    return {voice:v||pool[0]||en[0]||null,deepen:!male.length};
   }
   talkBtn.addEventListener('click',function(){
     if(speaking){stopTalk();return}
@@ -630,21 +635,26 @@ footer{
     talkBtn.textContent='⏹ Stop';
     portrait.classList.add('speaking');
     bubble.classList.add('show');
-    var voice=pickVoice(),i=0;
+    if(!speechSynthesis.getVoices().length){
+      speechSynthesis.onvoiceschanged=function(){
+        speechSynthesis.onvoiceschanged=null;
+        if(speaking){speaking=false;talkBtn.click()}
+      };
+      return;
+    }
+    var pick=pickVoice(),i=0;
     (function next(){
       if(!speaking||i>=LINES.length){stopTalk();return}
       bubble.textContent=LINES[i];
       var u=new SpeechSynthesisUtterance(LINES[i]);
-      if(voice)u.voice=voice;
-      u.rate=1;u.pitch=1;
+      if(pick.voice)u.voice=pick.voice;
+      u.rate=.97;u.pitch=pick.deepen?.75:.9;
       u.onend=function(){i++;next()};
       u.onerror=function(){stopTalk()};
       speechSynthesis.speak(u);
     })();
   });
-  if(window.speechSynthesis&&speechSynthesis.onvoiceschanged!==undefined){
-    speechSynthesis.onvoiceschanged=function(){};
-  }
+  if(window.speechSynthesis){speechSynthesis.getVoices()}
   /* hero reel video (drops in automatically when hero-reel.mp4 exists) */
   var reel=document.getElementById('heroReel'),soundBtn=document.getElementById('soundBtn');
   reel.addEventListener('loadeddata',function(){
