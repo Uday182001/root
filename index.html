@@ -88,6 +88,36 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
   color:var(--accent);font-weight:600;
 }
 
+/* ---------- preloader ---------- */
+#preloader{
+  position:fixed;inset:0;z-index:100;background:var(--ground);
+  display:grid;place-items:center;
+  transition:opacity .55s ease,visibility .55s;
+}
+#preloader.done{opacity:0;visibility:hidden}
+body.preloading{overflow:hidden}
+.pre-name{
+  position:relative;font-family:'Fraunces',serif;font-weight:600;
+  font-size:clamp(2.8rem,11vw,7rem);letter-spacing:-.02em;line-height:1;
+  white-space:nowrap;
+}
+.pre-name .ghost{color:var(--ink);opacity:.08}
+.pre-name .fill{
+  position:absolute;inset:0;color:var(--ink);
+  clip-path:inset(0 100% 0 0);
+  animation:nameFill 1.4s cubic-bezier(.7,0,.25,1) .2s forwards;
+}
+.pre-name .fill b{color:var(--accent);font-weight:600}
+.pre-sub{
+  position:absolute;left:50%;transform:translateX(-50%);margin-top:.6rem;
+  font-family:ui-monospace,Consolas,monospace;font-size:.72rem;
+  letter-spacing:.3em;text-transform:uppercase;color:var(--muted);
+  opacity:0;animation:subIn .5s ease 1.2s forwards;top:100%;
+}
+@keyframes nameFill{to{clip-path:inset(0 0 0 0)}}
+@keyframes subIn{to{opacity:1}}
+@media (prefers-reduced-motion: reduce){#preloader{display:none}}
+
 /* ---------- nav ---------- */
 header{
   position:sticky;top:0;z-index:50;
@@ -117,6 +147,12 @@ header{
   font-size:.95rem;line-height:1;display:grid;place-items:center;
 }
 #themeBtn:hover{border-color:var(--accent)}
+.nav-cta{
+  font-size:.8rem;font-weight:700;text-decoration:none;
+  color:var(--ground);background:var(--accent);
+  padding:.42rem .95rem;border-radius:999px;white-space:nowrap;
+}
+.nav-cta:hover{filter:brightness(1.08)}
 #menuBtn{
   display:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);
   width:2.1rem;height:2.1rem;border-radius:8px;cursor:pointer;font-size:1rem;line-height:1;
@@ -347,19 +383,27 @@ footer{
 @media (prefers-reduced-motion: reduce){ .reveal{opacity:1;transform:none} }
 </style>
 </head>
-<body>
+<body class="preloading">
 
+<div id="preloader" aria-hidden="true">
+  <div class="pre-name">
+    <span class="ghost">Udaykumar<b>.</b></span>
+    <span class="fill">Udaykumar<b>.</b></span>
+    <span class="pre-sub">Java · SAP BTP · Backend Engineer</span>
+  </div>
+</div>
 
 <header>
   <nav class="nav" aria-label="Main">
     <a class="brand" href="#home">Udaykumar<b>&nbsp;Bandi</b></a>
     <div class="nav-links" id="navLinks">
-      <a href="#about">About</a>
+      <a href="#about">Story</a>
       <a href="#experience">Experience</a>
       <a href="#work">Work</a>
       <a href="#skills">Skills</a>
       <a href="#contact">Contact</a>
     </div>
+    <a class="nav-cta" href="UdayKumar_Bandi_Resume.pdf" download="UdayKumar_Bandi_Resume.pdf">Resume ↓</a>
     <button id="themeBtn" aria-label="Toggle dark mode" title="Toggle theme">◐</button>
     <button id="menuBtn" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">☰</button>
   </nav>
@@ -372,12 +416,13 @@ footer{
       <span class="eyebrow">Java · SAP BTP CAPM · Cloud-Native Backends</span>
       <h1>I build the enterprise backends that <em>keep heavy industry running.</em></h1>
       <p class="lede">
-        I'm Udaykumar Bandi, a Java &amp; SAP BTP developer at AsInt, Inc. — designing
-        cloud-native services with CAPM, CDS and OData V4 on SAP HANA Cloud, for
-        asset-integrity platforms in the oil &amp; gas industry.
+        Two years ago I walked into my first production incident on an oil &amp; gas
+        platform. Today, clients ask for me by name when something critical breaks.
+        I'm Udaykumar Bandi — Java &amp; SAP BTP developer at AsInt, and this is my story.
       </p>
       <div class="cta-row">
         <a class="btn btn-primary" href="#contact">Get in touch</a>
+        <a class="btn btn-ghost" href="UdayKumar_Bandi_Resume.pdf" download="UdayKumar_Bandi_Resume.pdf">Download resume ↓</a>
         <a class="btn btn-ghost" href="https://www.linkedin.com/in/udaykumar-bandi-6a87a1212/" target="_blank" rel="noopener">LinkedIn ↗</a>
       </div>
     </div>
@@ -403,32 +448,36 @@ footer{
   </section>
 
   <section id="about" class="reveal">
-    <div class="sec-head"><h2>About</h2></div>
+    <div class="sec-head"><h2>My Story</h2></div>
     <div class="about-grid">
       <div>
         <p>
-          I work on the <strong>AsInt Intelligence Suite</strong> — an enterprise platform that
-          tracks technical assets through assessments and maintenance workflows, so oil &amp; gas
-          operators can keep their equipment safe and reliable. My day-to-day is Java on
-          SAP BTP Cloud Foundry: CDS data models, OData V4 service projections, handler logic,
-          XSUAA auth, and query tuning on SAP HANA Cloud.
+          I grew up in Khammam, Telangana — the kid who kept asking how things work under the
+          hood. That curiosity carried me through a Computer Science degree, and in February 2024
+          it landed me somewhere most junior developers never start: an industry where software
+          failure isn't an inconvenience, it's a safety risk. <strong>Oil &amp; gas.</strong>
         </p>
         <p>
-          What I'm known for is ownership. I've been the person clients call when production
-          breaks — root-causing critical issues fast enough to earn a
-          <strong>Client Appreciation Award</strong> — and the person teammates come to for help,
-          which earned an internal <strong>Coach Badge</strong> for mentoring juniors on Java and
-          SAP CAP/CDS.
+          My real classroom was production. The platform I build on — the
+          <strong>AsInt Intelligence Suite</strong> — watches over industrial assets through
+          assessments and maintenance workflows. When it misbehaves, an operator somewhere is
+          flying blind, and someone has to find out why, fast. More and more, that someone was me.
+          I got fast at root-cause analysis the honest way: with real incidents, real clients on
+          the call, and real deadlines. Fast enough that clients sent a formal
+          <strong>appreciation award</strong> for it.
         </p>
         <p>
-          I write JUnit and Gatling tests before things ship, document the API contracts and
-          runbooks nobody else wants to write, and deliver inside Agile sprints without drama.
+          Then something unexpected happened — teammates started coming to me first. How do I
+          model this in CDS? Why is this HANA query slow? What would you check before this ships?
+          Mentoring became part of my job before anyone made it official, and eventually the
+          company did, with an internal <strong>Coach Badge</strong>.
         </p>
         <p>
-          Lately I've been widening my toolkit beyond the SAP world: <strong>Google Cloud
-          Platform</strong>, <strong>Kubernetes</strong> and <strong>Docker</strong> for container
-          orchestration, <strong>PostgreSQL</strong>, and event-driven patterns with
-          <strong>RabbitMQ</strong> and <strong>Spring Batch</strong> for high-volume processing.
+          The story isn't finished. Right now I'm widening the map beyond SAP:
+          <strong>Google Cloud Platform</strong>, <strong>Kubernetes</strong> and
+          <strong>Docker</strong>, <strong>PostgreSQL</strong>, and event-driven patterns with
+          <strong>RabbitMQ</strong> and <strong>Spring Batch</strong> — because the backends I
+          want to build next are bigger than any one platform.
         </p>
       </div>
       <div class="fact-card">
@@ -443,7 +492,7 @@ footer{
   </section>
 
   <section id="experience" class="reveal">
-    <div class="sec-head"><h2>Experience</h2></div>
+    <div class="sec-head"><h2>The Journey So Far</h2></div>
     <article class="xp">
       <h3>Junior Developer · <span class="org">AsInt, Inc.</span></h3>
       <p class="meta">Feb 2024 — Present · Remote · Oil &amp; Gas Enterprise</p>
@@ -461,7 +510,7 @@ footer{
   </section>
 
   <section id="work" class="reveal">
-    <div class="sec-head"><h2>Selected Work</h2></div>
+    <div class="sec-head"><h2>Things I&#8217;ve Built</h2></div>
     <div class="cards">
       <article class="card">
         <span class="role">Production · AsInt, Inc.</span>
@@ -495,7 +544,7 @@ footer{
   </section>
 
   <section id="skills" class="reveal">
-    <div class="sec-head"><h2>Skills</h2></div>
+    <div class="sec-head"><h2>My Toolbox</h2></div>
     <div class="skill-rows">
       <div class="skill-row"><h4>Languages</h4><div>
         <span class="chip hot">Java</span><span class="chip">SQL</span><span class="chip">JavaScript</span>
@@ -532,7 +581,7 @@ footer{
   </section>
 
   <section id="education" class="reveal">
-    <div class="sec-head"><h2>Education &amp; Recognition</h2></div>
+    <div class="sec-head"><h2>Where It Started</h2></div>
     <div class="duo">
       <div class="award">
         <b>B.Tech — Computer Science</b>
@@ -554,7 +603,7 @@ footer{
   <section id="contact" class="contact reveal">
     <span class="eyebrow">Contact</span>
     <h2>Hiring for Java or SAP BTP? <em>Let's talk.</em></h2>
-    <p>Tell me a little about the role or the problem you're solving — I usually reply within a day.</p>
+    <p>Maybe the next chapter of this story is with your team. Tell me a little about the role or the problem you're solving — I usually reply within a day.</p>
     <form class="mail-form" id="mailForm">
       <div class="row2">
         <label>Your name
@@ -571,6 +620,7 @@ footer{
       <p class="form-note">Opens your mail app with everything pre-filled — nothing is stored on this site.</p>
     </form>
     <div class="cta-row">
+      <a class="btn btn-ghost" href="UdayKumar_Bandi_Resume.pdf" download="UdayKumar_Bandi_Resume.pdf">Download resume ↓</a>
       <button class="btn btn-ghost" id="copyBtn" type="button" data-email="udaykumarbandi6818@gmail.com">Copy email</button>
       <a class="btn btn-ghost" href="tel:+916301706818">+91 63017 06818</a>
       <a class="btn btn-ghost" href="https://www.linkedin.com/in/udaykumar-bandi-6a87a1212/" target="_blank" rel="noopener">LinkedIn ↗</a>
@@ -583,6 +633,14 @@ footer{
 
 <script>
 (function(){
+  var pre=document.getElementById('preloader');
+  function endPre(){
+    if(!pre)return;
+    pre.classList.add('done');document.body.classList.remove('preloading');
+    setTimeout(function(){pre.remove();pre=null},600);
+  }
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){endPre()}
+  else{setTimeout(endPre,2100)}
   var btn=document.getElementById('themeBtn'),root=document.documentElement;
   var stored=null;try{stored=localStorage.getItem('theme')}catch(e){}
   if(stored)root.setAttribute('data-theme',stored);
