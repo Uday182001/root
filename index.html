@@ -165,6 +165,37 @@ section{padding:4.6rem 0 1rem}
   color:var(--accent);font-weight:600;
 }
 .portrait .badge b{color:var(--amber)}
+.portrait video{
+  display:none;width:100%;aspect-ratio:1;object-fit:cover;border-radius:22px;
+  border:1px solid var(--line);box-shadow:var(--shadow);
+}
+.portrait.has-video img{display:none}
+.portrait.has-video video{display:block}
+.portrait.speaking img{animation:speakPulse 1.6s ease-in-out infinite}
+@keyframes speakPulse{
+  0%,100%{box-shadow:var(--shadow),0 0 0 0 var(--accent-soft)}
+  50%{box-shadow:var(--shadow),0 0 0 14px var(--accent-soft)}
+}
+.talk-controls{display:flex;justify-content:center;gap:.6rem;margin-top:1.9rem}
+.talk-btn{
+  display:inline-flex;align-items:center;gap:.5rem;cursor:pointer;
+  font:inherit;font-weight:600;font-size:.85rem;
+  border:1px solid var(--accent);color:var(--accent);background:var(--surface);
+  padding:.55rem 1.1rem;border-radius:999px;
+}
+.talk-btn:hover{background:var(--accent);color:var(--ground)}
+.bubble{
+  display:none;position:relative;margin-top:1rem;
+  background:var(--surface);border:1px solid var(--accent);border-radius:14px;
+  padding:.9rem 1.1rem;font-size:.92rem;line-height:1.5;color:var(--ink);
+  box-shadow:var(--shadow);max-width:300px;margin-left:auto;margin-right:auto;
+}
+.bubble::before{
+  content:"";position:absolute;top:-7px;left:50%;transform:translateX(-50%) rotate(45deg);
+  width:12px;height:12px;background:var(--surface);
+  border-left:1px solid var(--accent);border-top:1px solid var(--accent);
+}
+.bubble.show{display:block}
 @media (max-width:820px){
   .hero{grid-template-columns:1fr;gap:2.6rem}
   .portrait{grid-row:1;width:min(220px,60vw)}
@@ -350,10 +381,19 @@ footer{
         <a class="btn btn-ghost" href="https://www.linkedin.com/in/udaykumar-bandi-6a87a1212/" target="_blank" rel="noopener">LinkedIn ↗</a>
       </div>
     </div>
-    <div class="portrait">
-      <img src="photo.jpg" alt="Portrait of Udaykumar Bandi" width="800" height="800"
-           onerror="this.parentElement.style.display='none'" />
-      <span class="badge"><b>●</b>&nbsp;OPEN TO OPPORTUNITIES</span>
+    <div>
+      <div class="portrait" id="portrait">
+        <img src="photo.jpg" alt="Portrait of Udaykumar Bandi" width="800" height="800"
+             onerror="this.parentElement.style.display='none'" />
+        <video id="heroReel" src="hero-reel.mp4" playsinline loop muted preload="metadata"
+               aria-label="Animated intro of Udaykumar Bandi"></video>
+        <span class="badge"><b>●</b>&nbsp;OPEN TO OPPORTUNITIES</span>
+      </div>
+      <div class="talk-controls">
+        <button class="talk-btn" id="talkBtn" type="button">🔊 Hear my 20-sec intro</button>
+        <button class="talk-btn" id="soundBtn" type="button" hidden>🔇 Sound on</button>
+      </div>
+      <div class="bubble" id="bubble" aria-live="polite"></div>
     </div>
     <div class="stat-row hero-stats">
       <div class="stat"><b>2.5+</b><span>years in production</span></div>
@@ -557,6 +597,66 @@ footer{
         body=msg+'\n\n—\n'+name+'\n'+email;
     location.href='mailto:udaykumarbandi6818@gmail.com?subject='+
       encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+  });
+  /* talking intro */
+  var portrait=document.getElementById('portrait'),
+      talkBtn=document.getElementById('talkBtn'),
+      bubble=document.getElementById('bubble'),
+      LINES=[
+        "Hi, I'm Udaykumar Bandi. I build cloud-native enterprise backends with Java and SAP BTP.",
+        "For the last two and a half years at AsInt, I've shipped CAPM services, OData APIs and SAP HANA Cloud models for the oil and gas industry.",
+        "If you're hiring for Java or SAP BTP roles — send me a message below. I usually reply within a day."
+      ],speaking=false;
+  function stopTalk(){
+    speaking=false;
+    if(window.speechSynthesis)speechSynthesis.cancel();
+    portrait.classList.remove('speaking');
+    bubble.classList.remove('show');
+    talkBtn.textContent='🔊 Hear my 20-sec intro';
+  }
+  function pickVoice(){
+    var vs=speechSynthesis.getVoices(),v=null;
+    ['en-IN','en-GB','en-US','en'].some(function(l){
+      v=vs.find(function(x){return x.lang&&x.lang.indexOf(l)===0});return !!v;
+    });
+    return v;
+  }
+  talkBtn.addEventListener('click',function(){
+    if(speaking){stopTalk();return}
+    if(!('speechSynthesis' in window)){
+      bubble.textContent=LINES.join(' ');bubble.classList.add('show');return;
+    }
+    speaking=true;
+    talkBtn.textContent='⏹ Stop';
+    portrait.classList.add('speaking');
+    bubble.classList.add('show');
+    var voice=pickVoice(),i=0;
+    (function next(){
+      if(!speaking||i>=LINES.length){stopTalk();return}
+      bubble.textContent=LINES[i];
+      var u=new SpeechSynthesisUtterance(LINES[i]);
+      if(voice)u.voice=voice;
+      u.rate=1;u.pitch=1;
+      u.onend=function(){i++;next()};
+      u.onerror=function(){stopTalk()};
+      speechSynthesis.speak(u);
+    })();
+  });
+  if(window.speechSynthesis&&speechSynthesis.onvoiceschanged!==undefined){
+    speechSynthesis.onvoiceschanged=function(){};
+  }
+  /* hero reel video (drops in automatically when hero-reel.mp4 exists) */
+  var reel=document.getElementById('heroReel'),soundBtn=document.getElementById('soundBtn');
+  reel.addEventListener('loadeddata',function(){
+    portrait.classList.add('has-video');
+    talkBtn.hidden=true;soundBtn.hidden=false;
+    reel.play().catch(function(){});
+  });
+  reel.addEventListener('error',function(){reel.remove()});
+  soundBtn.addEventListener('click',function(){
+    reel.muted=!reel.muted;
+    if(!reel.muted){reel.currentTime=0;reel.play().catch(function(){})}
+    soundBtn.textContent=reel.muted?'🔇 Sound on':'🔊 Mute';
   });
   var copyBtn=document.getElementById('copyBtn');
   copyBtn.addEventListener('click',function(){
