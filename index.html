@@ -88,6 +88,40 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-off
   color:var(--accent);font-weight:600;
 }
 
+/* ---------- sky: drifting clouds + scattered specks ---------- */
+.sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+#preloader .sky{position:absolute;z-index:0}
+.cloud{
+  position:absolute;border-radius:50%;
+  background:radial-gradient(ellipse at center,var(--cloud) 0%,transparent 70%);
+  filter:blur(2px);
+  animation:drift linear infinite;
+}
+.cloud.c1{width:420px;height:130px;top:12%;animation-duration:65s;animation-delay:-10s}
+.cloud.c2{width:300px;height:100px;top:34%;animation-duration:90s;animation-delay:-45s}
+.cloud.c3{width:520px;height:150px;top:58%;animation-duration:75s;animation-delay:-30s}
+.cloud.c4{width:240px;height:80px;top:78%;animation-duration:55s;animation-delay:-20s}
+@keyframes drift{
+  from{transform:translateX(-560px)}
+  to{transform:translateX(calc(100vw + 560px))}
+}
+.speck{
+  position:absolute;width:4px;height:4px;border-radius:50%;
+  background:var(--accent);opacity:.28;
+  animation:floatUp ease-in-out infinite alternate;
+}
+.speck:nth-child(odd){background:var(--amber)}
+@keyframes floatUp{
+  from{transform:translateY(6px) scale(.8)}
+  to{transform:translateY(-10px) scale(1.1)}
+}
+:root{--cloud:rgba(15,110,102,.10)}
+@media (prefers-color-scheme: dark){:root{--cloud:rgba(83,184,172,.07)}}
+:root[data-theme="dark"]{--cloud:rgba(83,184,172,.07)}
+:root[data-theme="light"]{--cloud:rgba(15,110,102,.10)}
+@media (prefers-reduced-motion: reduce){.cloud,.speck{animation:none}}
+header,main,footer,.wa-fab{position:relative;z-index:1}
+
 /* ---------- preloader ---------- */
 #preloader{
   position:fixed;inset:0;z-index:100;background:var(--ground);
@@ -384,11 +418,29 @@ footer{
 <body class="preloading">
 
 <div id="preloader" aria-hidden="true">
+  <div class="sky">
+    <div class="cloud c1"></div><div class="cloud c2"></div>
+    <div class="cloud c3"></div><div class="cloud c4"></div>
+    <span class="speck" style="top:22%;left:18%;animation-duration:3.2s"></span>
+    <span class="speck" style="top:65%;left:78%;animation-duration:4.1s"></span>
+    <span class="speck" style="top:40%;left:88%;animation-duration:3.6s"></span>
+    <span class="speck" style="top:80%;left:30%;animation-duration:4.5s"></span>
+    <span class="speck" style="top:15%;left:62%;animation-duration:3.9s"></span>
+  </div>
   <div class="pre-name">
     <span class="ghost">Udaykumar<b>.</b></span>
     <span class="fill">Udaykumar<b>.</b></span>
     <span class="pre-sub">Java · Spring Boot · Backend Engineer</span>
   </div>
+</div>
+
+<div class="sky" aria-hidden="true">
+  <div class="cloud c1"></div><div class="cloud c2"></div>
+  <div class="cloud c3"></div><div class="cloud c4"></div>
+  <span class="speck" style="top:25%;left:12%;animation-duration:3.4s"></span>
+  <span class="speck" style="top:70%;left:85%;animation-duration:4.2s"></span>
+  <span class="speck" style="top:50%;left:45%;animation-duration:3.8s"></span>
+  <span class="speck" style="top:85%;left:20%;animation-duration:4.6s"></span>
 </div>
 
 <header>
