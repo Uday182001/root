@@ -238,20 +238,17 @@ section{padding:4.6rem 0 1rem}
 }
 .captions{
   align-self:flex-start;text-align:left;
-  max-width:min(86vw,560px);min-height:3rem;
+  max-width:min(86vw,600px);min-height:3.2rem;
   font-family:'Fraunces',serif;
-  font-size:clamp(1.25rem,3.2vw,2rem);font-weight:600;line-height:1.3;
+  font-size:clamp(1.5rem,3.8vw,2.5rem);font-weight:800;line-height:1.22;
   letter-spacing:.01em;text-wrap:balance;
-  color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.65);
-  background:linear-gradient(100deg,rgba(10,7,4,.72),rgba(10,7,4,.38) 80%,rgba(10,7,4,0));
-  backdrop-filter:blur(10px);
-  border-left:4px solid var(--amber);border-radius:4px 16px 16px 4px;
-  padding:.7rem 2rem .7rem 1.1rem;
-  opacity:0;transform:translateX(-14px);
+  color:#FF8A2E;
+  text-shadow:0 2px 6px rgba(0,0,0,.55),0 6px 26px rgba(0,0,0,.5);
+  opacity:0;transform:translateX(-16px);
   transition:opacity .35s ease,transform .35s ease;
 }
 .captions.on{opacity:1;transform:none}
-.captions em{font-style:italic;color:#FFB07A}
+.captions em{font-style:italic;color:#fff}
 .badge{
   display:inline-flex;align-items:center;margin-bottom:1.1rem;
   background:rgba(16,10,6,.5);border:1px solid rgba(255,255,255,.3);
@@ -807,10 +804,10 @@ footer{
   /* live captions, synced with the intro speech */
   var capEl=document.getElementById('captions'),
       CUES=[
-        [0.2,2.1,"Hello! I'm <em>Udaykumar</em> —"],
-        [2.1,5.1,"a software developer passionate about building"],
-        [5.1,7.5,"<em>scalable, secure and robust</em> applications."],
-        [7.5,9.9,"Welcome to my portfolio — take a look around."]
+        [1.1,2.9,"Hello! I'm <em>Udaykumar</em> —"],
+        [2.9,5.6,"a software developer passionate about building"],
+        [5.6,7.9,"<em>scalable, secure and robust</em> applications."],
+        [7.9,10.0,"Welcome to my portfolio — take a look around."]
       ],lastCue=-1;
   reel.addEventListener('timeupdate',function(){
     var t=reel.currentTime,hit=-1;
