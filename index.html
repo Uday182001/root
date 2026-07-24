@@ -137,18 +137,27 @@ body.preloading{overflow:hidden}
 }
 .pre-name .ghost{color:var(--ink);opacity:.08}
 .pre-name .fill{
-  position:absolute;inset:0;color:var(--ink);
-  clip-path:inset(0 100% 0 0);
-  animation:nameFill 1.4s cubic-bezier(.7,0,.25,1) .2s forwards;
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,var(--amber) 0%,var(--accent) 78%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  clip-path:inset(100% 0 0 0);
+  animation:nameFill 1.9s cubic-bezier(.6,.02,.3,1) .25s forwards;
 }
-.pre-name .fill b{color:var(--accent);font-weight:600}
+.pre-name .fill b{color:transparent;font-weight:600}
 .pre-sub{
   position:absolute;left:50%;transform:translateX(-50%);margin-top:.6rem;
   font-family:ui-monospace,Consolas,monospace;font-size:.72rem;
   letter-spacing:.3em;text-transform:uppercase;color:var(--muted);
   opacity:0;animation:subIn .5s ease 1.2s forwards;top:100%;
 }
-@keyframes nameFill{to{clip-path:inset(0 0 0 0)}}
+@keyframes nameFill{
+  0%{clip-path:inset(100% 0 0 0)}
+  38%{clip-path:inset(58% 0 0 0)}
+  52%{clip-path:inset(46% 0 0 0)}
+  66%{clip-path:inset(28% 0 0 0)}
+  78%{clip-path:inset(16% 0 0 0)}
+  100%{clip-path:inset(0 0 0 0)}
+}
 @keyframes subIn{to{opacity:1}}
 @media (prefers-reduced-motion: reduce){#preloader{display:none}}
 
@@ -238,17 +247,26 @@ section{padding:4.6rem 0 1rem}
 }
 .captions{
   align-self:flex-start;text-align:left;
-  max-width:min(86vw,600px);min-height:3.2rem;
+  max-width:min(86vw,640px);min-height:3.4rem;
   font-family:'Fraunces',serif;
-  font-size:clamp(1.5rem,3.8vw,2.5rem);font-weight:800;line-height:1.22;
-  letter-spacing:.01em;text-wrap:balance;
-  color:#FF8A2E;
-  text-shadow:0 2px 6px rgba(0,0,0,.55),0 6px 26px rgba(0,0,0,.5);
-  opacity:0;transform:translateX(-16px);
-  transition:opacity .35s ease,transform .35s ease;
+  font-size:clamp(1.7rem,4.4vw,3rem);font-weight:900;line-height:1.15;
+  letter-spacing:-.01em;text-wrap:balance;
+  filter:drop-shadow(0 3px 6px rgba(0,0,0,.6)) drop-shadow(0 10px 28px rgba(0,0,0,.45));
 }
-.captions.on{opacity:1;transform:none}
-.captions em{font-style:italic;color:#fff}
+.captions .w{
+  display:inline-block;margin-right:.26em;
+  background:linear-gradient(180deg,#FFC078 8%,#FF7A1F 82%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  opacity:0;transform:translateY(.55em) scale(.82) rotate(1.5deg);
+  animation:wordIn .5s cubic-bezier(.2,.75,.25,1.05) forwards;
+}
+.captions .w.em{
+  font-style:italic;
+  background:linear-gradient(180deg,#FFFFFF 20%,#FFE3C7 90%);
+  -webkit-background-clip:text;background-clip:text;
+}
+@keyframes wordIn{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.captions .w{animation-duration:.01s}}
 .badge{
   display:inline-flex;align-items:center;margin-bottom:1.1rem;
   background:rgba(16,10,6,.5);border:1px solid rgba(255,255,255,.3);
@@ -724,7 +742,7 @@ footer{
     setTimeout(function(){pre.remove();pre=null},600);
   }
   if(matchMedia('(prefers-reduced-motion: reduce)').matches){endPre()}
-  else{setTimeout(endPre,2100)}
+  else{setTimeout(endPre,2500)}
   var btn=document.getElementById('themeBtn'),root=document.documentElement;
   var stored=null;try{stored=localStorage.getItem('theme')}catch(e){}
   if(stored)root.setAttribute('data-theme',stored);
@@ -804,18 +822,25 @@ footer{
   /* live captions, synced with the intro speech */
   var capEl=document.getElementById('captions'),
       CUES=[
-        [1.1,2.9,"Hello! I'm <em>Udaykumar</em> —"],
+        [1.1,2.9,"Hello! I'm *Udaykumar* —"],
         [2.9,5.6,"a software developer passionate about building"],
-        [5.6,7.9,"<em>scalable, secure and robust</em> applications."],
-        [7.9,10.0,"Welcome to my portfolio — take a look around."]
+        [5.6,7.9,"*scalable,* *secure* *and* *robust* applications."],
+        [7.9,10.0,"Welcome to my portfolio — *take* *a* *look* *around.*"]
       ],lastCue=-1;
+  function renderCue(text){
+    capEl.innerHTML=text.split(' ').map(function(tok,i){
+      var em=tok.charAt(0)==='*'||tok.slice(-1)==='*';
+      tok=tok.replace(/\*/g,'');
+      return '<span class="w'+(em?' em':'')+'" style="animation-delay:'+(i*90)+'ms">'+tok+'</span>';
+    }).join('');
+  }
   reel.addEventListener('timeupdate',function(){
     var t=reel.currentTime,hit=-1;
     for(var k=0;k<CUES.length;k++){if(t>=CUES[k][0]&&t<CUES[k][1]){hit=k;break}}
     if(hit===lastCue)return;
     lastCue=hit;
-    if(hit<0){capEl.classList.remove('on')}
-    else{capEl.innerHTML=CUES[hit][2];capEl.classList.add('on')}
+    if(hit<0){capEl.innerHTML=''}
+    else{renderCue(CUES[hit][2])}
   });
   var copyBtn=document.getElementById('copyBtn');
   copyBtn.addEventListener('click',function(){
