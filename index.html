@@ -220,8 +220,7 @@ section{padding:4.6rem 0 1rem}
 }
 .hero-media{position:absolute;inset:0}
 .hero-media video{position:absolute;inset:0;width:100%;height:100%}
-.reel-bg{object-fit:cover;filter:blur(48px) brightness(.5) saturate(1.1);transform:scale(1.2)}
-#heroReel{object-fit:contain}
+#heroReel{object-fit:cover;object-position:50% 24%}
 .hero-scrim{
   position:absolute;inset:0;
   background:linear-gradient(to top,rgba(12,8,5,.45) 0%,rgba(12,8,5,0) 26%,rgba(12,8,5,0) 78%,rgba(12,8,5,.35) 100%);
@@ -231,13 +230,18 @@ section{padding:4.6rem 0 1rem}
   display:flex;flex-direction:column;justify-content:space-between;
   align-items:flex-start;padding:4.6rem 1.4rem 1.4rem;color:#fff;
 }
-.hero-tag{
-  margin:0;font-family:ui-monospace,Consolas,monospace;font-size:.78rem;
-  letter-spacing:.12em;color:rgba(255,255,255,.92);
-  background:rgba(16,10,6,.5);backdrop-filter:blur(8px);
-  border:1px solid rgba(255,255,255,.25);border-radius:999px;
-  padding:.45rem 1rem;max-width:calc(100vw - 6.5rem);
+.captions{
+  align-self:center;text-align:center;
+  max-width:min(88vw,620px);min-height:2.4rem;
+  font-size:clamp(.95rem,2.3vw,1.18rem);font-weight:500;line-height:1.45;
+  color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.6);
+  background:rgba(10,7,4,.55);backdrop-filter:blur(10px);
+  border-radius:14px;padding:.55rem 1.2rem;
+  opacity:0;transform:translateY(6px);
+  transition:opacity .3s ease,transform .3s ease;
 }
+.captions.on{opacity:1;transform:none}
+.captions em{font-style:normal;color:#FFB07A}
 .badge{
   display:inline-flex;align-items:center;margin-bottom:1.1rem;
   background:rgba(16,10,6,.5);border:1px solid rgba(255,255,255,.3);
@@ -246,7 +250,7 @@ section{padding:4.6rem 0 1rem}
   color:#FF9B5E;font-weight:600;
 }
 .badge b{color:var(--amber)}
-.sound-fab{position:absolute;z-index:3;right:1.4rem;bottom:1.4rem}
+.sound-fab{position:absolute;z-index:3;right:5.6rem;bottom:1.35rem}
 .talk-btn{
   display:inline-flex;align-items:center;gap:.5rem;cursor:pointer;
   font:inherit;font-weight:600;font-size:.85rem;
@@ -483,14 +487,13 @@ footer{
 
   <section class="hero">
     <div class="hero-media" id="heroMedia" aria-hidden="true">
-      <video class="reel-bg" src="hero-reel.mp4" playsinline loop muted autoplay preload="auto" tabindex="-1"></video>
       <video id="heroReel" src="hero-reel.mp4" playsinline loop muted autoplay preload="auto"
              aria-label="Video intro of Udaykumar Bandi"></video>
       <div class="hero-scrim"></div>
     </div>
     <div class="hero-inner">
       <span class="badge"><b>●</b>&nbsp;OPEN TO OPPORTUNITIES</span>
-      <p class="hero-tag">Udaykumar Bandi — Java · Spring Boot · Backend Engineer</p>
+      <div class="captions" id="captions" aria-live="off"></div>
     </div>
     <button class="talk-btn sound-fab" id="soundBtn" type="button">🔇 Sound on</button>
   </section>
@@ -790,6 +793,22 @@ footer{
     reel.muted=!reel.muted;
     if(!reel.muted){reel.currentTime=0;reel.play().catch(function(){})}
     setBtn();
+  });
+  /* live captions, synced with the intro speech */
+  var capEl=document.getElementById('captions'),
+      CUES=[
+        [0.2,2.1,"Hello! I'm <em>Udaykumar</em> —"],
+        [2.1,5.1,"a software developer passionate about building"],
+        [5.1,7.5,"<em>scalable, secure and robust</em> applications."],
+        [7.5,9.9,"Welcome to my portfolio — take a look around."]
+      ],lastCue=-1;
+  reel.addEventListener('timeupdate',function(){
+    var t=reel.currentTime,hit=-1;
+    for(var k=0;k<CUES.length;k++){if(t>=CUES[k][0]&&t<CUES[k][1]){hit=k;break}}
+    if(hit===lastCue)return;
+    lastCue=hit;
+    if(hit<0){capEl.classList.remove('on')}
+    else{capEl.innerHTML=CUES[hit][2];capEl.classList.add('on')}
   });
   var copyBtn=document.getElementById('copyBtn');
   copyBtn.addEventListener('click',function(){
