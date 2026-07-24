@@ -224,20 +224,20 @@ section{padding:4.6rem 0 1rem}
 #heroReel{object-fit:contain}
 .hero-scrim{
   position:absolute;inset:0;
-  background:linear-gradient(to top,rgba(12,8,5,.88) 0%,rgba(12,8,5,.35) 42%,rgba(12,8,5,.12) 70%,rgba(12,8,5,.3) 100%);
+  background:linear-gradient(to top,rgba(12,8,5,.45) 0%,rgba(12,8,5,0) 26%,rgba(12,8,5,0) 78%,rgba(12,8,5,.35) 100%);
 }
 .hero-inner{
-  position:relative;z-index:2;width:100%;max-width:1060px;margin:0 auto;
-  padding:5.5rem 1.4rem 2rem;color:#fff;
+  position:absolute;inset:0;z-index:2;
+  display:flex;flex-direction:column;justify-content:space-between;
+  align-items:flex-start;padding:4.6rem 1.4rem 1.4rem;color:#fff;
 }
-.hero-inner .eyebrow{display:block;margin-bottom:1.1rem;color:#FF9B5E}
-.hero-inner h1{color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.45)}
-.hero-inner .lede{color:rgba(255,255,255,.88);text-shadow:0 1px 10px rgba(0,0,0,.4)}
-.hero-inner .btn-ghost{
-  border-color:rgba(255,255,255,.45);color:#fff;background:rgba(16,10,6,.35);
-  backdrop-filter:blur(6px);
+.hero-tag{
+  margin:0;font-family:ui-monospace,Consolas,monospace;font-size:.78rem;
+  letter-spacing:.12em;color:rgba(255,255,255,.92);
+  background:rgba(16,10,6,.5);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.25);border-radius:999px;
+  padding:.45rem 1rem;max-width:calc(100vw - 6.5rem);
 }
-.hero-inner .btn-ghost:hover{border-color:#FF9B5E;color:#FF9B5E}
 .badge{
   display:inline-flex;align-items:center;margin-bottom:1.1rem;
   background:rgba(16,10,6,.5);border:1px solid rgba(255,255,255,.3);
@@ -246,9 +246,6 @@ section{padding:4.6rem 0 1rem}
   color:#FF9B5E;font-weight:600;
 }
 .badge b{color:var(--amber)}
-.hero .stat-row{border-top-color:rgba(255,255,255,.22);margin-top:2.4rem;padding-top:1.4rem}
-.hero .stat b{color:#fff}
-.hero .stat span{color:rgba(255,255,255,.65)}
 .sound-fab{position:absolute;z-index:3;right:1.4rem;bottom:1.4rem}
 .talk-btn{
   display:inline-flex;align-items:center;gap:.5rem;cursor:pointer;
@@ -259,9 +256,19 @@ section{padding:4.6rem 0 1rem}
 .talk-btn:hover{border-color:#FF9B5E;color:#FF9B5E}
 .hero.no-video .hero-media{display:none}
 @media (max-width:820px){
-  .hero .stat-row{gap:1.4rem;margin-top:1.6rem}
-  .hero-inner{padding-top:5rem}
+  .hero-inner{padding-top:4.4rem}
 }
+
+/* ---------- intro (below the video) ---------- */
+.intro{padding:4.2rem 0 1rem}
+.intro .eyebrow{display:block;margin-bottom:1.1rem}
+.intro h1{
+  font-family:'Fraunces',serif;font-weight:400;
+  font-size:clamp(2.5rem,6.4vw,4.3rem);
+  line-height:1.08;margin:0 0 1.3rem;letter-spacing:-.01em;text-wrap:balance;
+}
+.intro h1 em{font-style:italic;color:var(--accent)}
+.intro .lede{max-width:34em;color:var(--muted);font-size:1.08rem;margin:0 0 2rem}
 .hero .eyebrow{display:block;margin-bottom:1.1rem}
 .hero h1{
   font-family:'Fraunces',serif;font-weight:400;
@@ -483,25 +490,29 @@ footer{
     </div>
     <div class="hero-inner">
       <span class="badge"><b>●</b>&nbsp;OPEN TO OPPORTUNITIES</span>
-      <span class="eyebrow">Java · Spring Boot · SAP CAPM · Backend Engineer</span>
-      <h1>I build the enterprise backends that <em>keep heavy industry running.</em></h1>
-      <p class="lede">
-        Two years ago I walked into my first production incident on an oil &amp; gas
-        platform. Today, clients ask for me by name when something critical breaks.
-        I'm Udaykumar Bandi — Java backend developer at AsInt, and this is my story.
-      </p>
-      <div class="cta-row">
-        <a class="btn btn-primary" href="#contact">Get in touch</a>
-        <a class="btn btn-ghost" href="UdayKumar_Bandi_Resume.pdf" download="UdayKumar_Bandi_Resume.pdf">Download resume ↓</a>
-        <a class="btn btn-ghost" href="https://www.linkedin.com/in/udaykumar-bandi-6a87a1212/" target="_blank" rel="noopener">LinkedIn ↗</a>
-      </div>
-      <div class="stat-row hero-stats">
-        <div class="stat"><b>2.5+</b><span>years in production</span></div>
-        <div class="stat"><b>OData V4</b><span>services shipped to production</span></div>
-        <div class="stat"><b>2×</b><span>awards — client &amp; coaching</span></div>
-      </div>
+      <p class="hero-tag">Udaykumar Bandi — Java · Spring Boot · Backend Engineer</p>
     </div>
     <button class="talk-btn sound-fab" id="soundBtn" type="button">🔇 Sound on</button>
+  </section>
+
+  <section class="intro">
+    <span class="eyebrow">Java · Spring Boot · SAP CAPM · Backend Engineer</span>
+    <h1>I build the enterprise backends that <em>keep heavy industry running.</em></h1>
+    <p class="lede">
+      Two years ago I walked into my first production incident on an oil &amp; gas
+      platform. Today, clients ask for me by name when something critical breaks.
+      I'm Udaykumar Bandi — Java backend developer at AsInt, and this is my story.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#contact">Get in touch</a>
+      <a class="btn btn-ghost" href="UdayKumar_Bandi_Resume.pdf" download="UdayKumar_Bandi_Resume.pdf">Download resume ↓</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/udaykumar-bandi-6a87a1212/" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+    <div class="stat-row">
+      <div class="stat"><b>2.5+</b><span>years in production</span></div>
+      <div class="stat"><b>OData V4</b><span>services shipped to production</span></div>
+      <div class="stat"><b>2×</b><span>awards — client &amp; coaching</span></div>
+    </div>
   </section>
 
   <section id="about" class="reveal">
