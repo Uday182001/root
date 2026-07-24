@@ -170,8 +170,7 @@ header:not(.scrolled) .nav-links a{color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.
 header:not(.scrolled) .brand b{color:#FF8A2E}
 header:not(.scrolled) .nav-links a.active{color:#FF8A2E}
 header:not(.scrolled) .nav-links a.active::after{background:#FF8A2E}
-header:not(.scrolled) #themeBtn,
-header:not(.scrolled) #menuBtn{
+header:not(.scrolled) #themeBtn{
   background:rgba(16,10,6,.4);color:#fff;border-color:rgba(255,255,255,.35);
 }
 .nav{
@@ -208,18 +207,15 @@ header:not(.scrolled) #menuBtn{
   padding:.42rem .95rem;border-radius:999px;white-space:nowrap;
 }
 .nav-cta:hover{filter:brightness(1.08)}
-#menuBtn{
-  display:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);
-  width:2.1rem;height:2.1rem;border-radius:8px;cursor:pointer;font-size:1rem;line-height:1;
-}
-@media (max-width:720px){
-  .nav-links a{display:none}
-  #menuBtn{display:grid;place-items:center}
-  .nav-links.open{position:absolute;top:100%;left:0;right:0;
-    background:var(--ground);border-bottom:1px solid var(--line);
-    display:flex;flex-direction:column;align-items:flex-start;
-    padding:1rem 1.4rem;gap:.9rem;box-shadow:var(--shadow);}
-  .nav-links.open a{display:block;font-size:1rem}
+@media (max-width:760px){
+  .nav{flex-wrap:wrap;row-gap:.6rem;padding:.7rem 1rem .65rem}
+  .brand{font-size:1.02rem}
+  .nav-cta{margin-left:auto;font-size:.74rem;padding:.38rem .8rem}
+  .nav-links{
+    order:3;width:100%;justify-content:space-between;gap:.3rem;
+  }
+  .nav-links a{font-size:.8rem;letter-spacing:.01em;white-space:nowrap}
+  .nav-links a.active::after{bottom:-4px}
 }
 
 /* ---------- shell ---------- */
@@ -520,7 +516,6 @@ footer{
     </div>
     <a class="nav-cta" href="UdayKumar_Bandi_Resume.pdf" download="UdayKumar_Bandi_Resume.pdf">Resume ↓</a>
     <button id="themeBtn" aria-label="Toggle dark mode" title="Toggle theme">◐</button>
-    <button id="menuBtn" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">☰</button>
   </nav>
 </header>
 
@@ -775,15 +770,6 @@ footer{
     var next=dark?'light':'dark';
     root.setAttribute('data-theme',next);
     try{localStorage.setItem('theme',next)}catch(e){}
-  });
-  var menuBtn=document.getElementById('menuBtn'),navLinks=document.getElementById('navLinks');
-  menuBtn.addEventListener('click',function(){
-    var open=navLinks.classList.toggle('open');
-    menuBtn.setAttribute('aria-expanded',open?'true':'false');
-    menuBtn.textContent=open?'✕':'☰';
-  });
-  navLinks.addEventListener('click',function(e){
-    if(e.target.tagName==='A'){navLinks.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');menuBtn.textContent='☰'}
   });
   document.getElementById('mailForm').addEventListener('submit',function(e){
     e.preventDefault();
