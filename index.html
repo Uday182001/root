@@ -438,6 +438,17 @@ footer{
   font-family:ui-monospace,Consolas,monospace;letter-spacing:.05em;
 }
 
+/* ---------- icon buttons ---------- */
+.icon-row{display:flex;gap:.7rem;align-items:center}
+.icon-btn{
+  width:2.9rem;height:2.9rem;border-radius:50%;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink);
+  display:grid;place-items:center;text-decoration:none;cursor:pointer;
+  transition:transform .15s ease,border-color .15s ease,color .15s ease;
+}
+.icon-btn svg{width:1.25rem;height:1.25rem;fill:currentColor}
+.icon-btn:hover{transform:translateY(-2px);border-color:var(--accent);color:var(--accent)}
+
 /* ---------- whatsapp fab ---------- */
 .wa-fab{
   position:fixed;right:1.2rem;bottom:1.2rem;z-index:60;
@@ -533,7 +544,11 @@ footer{
     <div class="cta-row">
       <a class="btn btn-primary" href="#contact">Get in touch</a>
       <a class="btn btn-ghost" href="UdayKumar_Bandi_Resume.pdf" download="UdayKumar_Bandi_Resume.pdf">Download resume ↓</a>
-      <a class="btn btn-ghost" href="https://www.linkedin.com/in/udaykumar-bandi-6a87a1212/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <span class="icon-row">
+        <a class="icon-btn" href="https://www.linkedin.com/in/udaykumar-bandi-6a87a1212/" target="_blank" rel="noopener" aria-label="Visit my LinkedIn profile" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.55V9h3.57v11.45z"/></svg></a>
+        <a class="icon-btn" href="https://wa.me/916301706818?text=Hi%20Udaykumar%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect." target="_blank" rel="noopener" aria-label="Chat on WhatsApp" title="WhatsApp"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16.04 3C9.02 3 3.32 8.7 3.32 15.72c0 2.24.59 4.42 1.7 6.35L3.2 28.8l6.89-1.8a12.66 12.66 0 0 0 5.95 1.51h.01c7.01 0 12.72-5.7 12.72-12.72C28.77 8.7 23.06 3 16.04 3zm0 23.4h-.01c-1.9 0-3.76-.51-5.38-1.47l-.39-.23-4.09 1.07 1.09-3.98-.25-.41a10.6 10.6 0 0 1-1.62-5.66c0-5.86 4.77-10.62 10.64-10.62 2.84 0 5.51 1.1 7.52 3.11a10.56 10.56 0 0 1 3.11 7.52c0 5.86-4.77 10.62-10.63 10.62zm5.83-7.96c-.32-.16-1.89-.93-2.18-1.04-.29-.11-.5-.16-.72.16-.21.32-.82 1.04-1.01 1.25-.19.21-.37.24-.69.08-.32-.16-1.35-.5-2.57-1.59-.95-.85-1.59-1.9-1.78-2.22-.19-.32-.02-.49.14-.65.14-.14.32-.37.48-.56.16-.19.21-.32.32-.53.11-.21.05-.4-.03-.56-.08-.16-.72-1.73-.98-2.37-.26-.62-.52-.54-.72-.55h-.61c-.21 0-.56.08-.85.4-.29.32-1.12 1.09-1.12 2.66 0 1.57 1.14 3.08 1.3 3.29.16.21 2.25 3.44 5.45 4.82.76.33 1.36.53 1.82.67.77.24 1.46.21 2.01.13.61-.09 1.89-.77 2.16-1.52.27-.75.27-1.39.19-1.52-.08-.13-.29-.21-.61-.37z"/></svg></a>
+        <a class="icon-btn" href="tel:+916301706818" aria-label="Call me" title="Call"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg></a>
+      </span>
     </div>
     <div class="stat-row">
       <div class="stat"><b>2.5+</b><span>years in production</span></div>
@@ -717,9 +732,12 @@ footer{
     <div class="cta-row">
       <a class="btn btn-ghost" href="UdayKumar_Bandi_Resume.pdf" download="UdayKumar_Bandi_Resume.pdf">Download resume ↓</a>
       <button class="btn btn-ghost" id="copyBtn" type="button" data-email="udaykumarbandi6818@gmail.com">Copy email</button>
-      <a class="btn btn-ghost" href="https://wa.me/916301706818?text=Hi%20Udaykumar%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect." target="_blank" rel="noopener">WhatsApp me</a>
-      <a class="btn btn-ghost" href="tel:+916301706818">Call +91 63017 06818</a>
-      <a class="btn btn-ghost" href="https://www.linkedin.com/in/udaykumar-bandi-6a87a1212/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <span class="icon-row">
+        <a class="icon-btn" href="mailto:udaykumarbandi6818@gmail.com" aria-label="Email me" title="Email"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
+        <a class="icon-btn" href="https://wa.me/916301706818?text=Hi%20Udaykumar%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect." target="_blank" rel="noopener" aria-label="Chat on WhatsApp" title="WhatsApp"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16.04 3C9.02 3 3.32 8.7 3.32 15.72c0 2.24.59 4.42 1.7 6.35L3.2 28.8l6.89-1.8a12.66 12.66 0 0 0 5.95 1.51h.01c7.01 0 12.72-5.7 12.72-12.72C28.77 8.7 23.06 3 16.04 3zm0 23.4h-.01c-1.9 0-3.76-.51-5.38-1.47l-.39-.23-4.09 1.07 1.09-3.98-.25-.41a10.6 10.6 0 0 1-1.62-5.66c0-5.86 4.77-10.62 10.64-10.62 2.84 0 5.51 1.1 7.52 3.11a10.56 10.56 0 0 1 3.11 7.52c0 5.86-4.77 10.62-10.63 10.62zm5.83-7.96c-.32-.16-1.89-.93-2.18-1.04-.29-.11-.5-.16-.72.16-.21.32-.82 1.04-1.01 1.25-.19.21-.37.24-.69.08-.32-.16-1.35-.5-2.57-1.59-.95-.85-1.59-1.9-1.78-2.22-.19-.32-.02-.49.14-.65.14-.14.32-.37.48-.56.16-.19.21-.32.32-.53.11-.21.05-.4-.03-.56-.08-.16-.72-1.73-.98-2.37-.26-.62-.52-.54-.72-.55h-.61c-.21 0-.56.08-.85.4-.29.32-1.12 1.09-1.12 2.66 0 1.57 1.14 3.08 1.3 3.29.16.21 2.25 3.44 5.45 4.82.76.33 1.36.53 1.82.67.77.24 1.46.21 2.01.13.61-.09 1.89-.77 2.16-1.52.27-.75.27-1.39.19-1.52-.08-.13-.29-.21-.61-.37z"/></svg></a>
+        <a class="icon-btn" href="tel:+916301706818" aria-label="Call me" title="Call"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg></a>
+        <a class="icon-btn" href="https://www.linkedin.com/in/udaykumar-bandi-6a87a1212/" target="_blank" rel="noopener" aria-label="Visit my LinkedIn profile" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.55V9h3.57v11.45z"/></svg></a>
+      </span>
     </div>
   </section>
 
