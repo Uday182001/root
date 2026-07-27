@@ -448,18 +448,29 @@ section.in .timeline::before{transform:scaleY(1)}
 .tl-item{
   position:relative;padding:.5rem 0 1.05rem;
   opacity:0;transform:translateX(-16px);
-  transition:opacity .5s ease,transform .5s ease;
+  transition:opacity .5s ease,transform .5s ease,padding-left .28s ease;
+  border-radius:8px;
 }
 section.in .tl-item{opacity:1;transform:none}
-section.in .tl-item:nth-child(1){transition-delay:.35s}
-section.in .tl-item:nth-child(2){transition-delay:.65s}
-section.in .tl-item:nth-child(3){transition-delay:.95s}
-section.in .tl-item:nth-child(4){transition-delay:1.25s}
+section.in .tl-item:nth-child(1){transition-delay:.35s,.35s,0s}
+section.in .tl-item:nth-child(2){transition-delay:.65s,.65s,0s}
+section.in .tl-item:nth-child(3){transition-delay:.95s,.95s,0s}
+section.in .tl-item:nth-child(4){transition-delay:1.25s,1.25s,0s}
 .tl-item::before{
   content:"";position:absolute;left:-2.3rem;top:.95rem;
   width:12px;height:12px;margin-left:3px;border-radius:50%;
   background:var(--ground);border:2px solid var(--accent);
+  transition:transform .28s cubic-bezier(.34,1.56,.64,1),background .28s ease,box-shadow .28s ease;
 }
+.tl-item:hover{padding-left:.65rem}
+.tl-item:hover::before{
+  background:var(--accent);transform:scale(1.45);
+  box-shadow:0 0 0 6px var(--accent-soft);
+}
+.tl-item b,.tl-item p,.tl-year{transition:color .28s ease}
+.tl-item:hover b{color:var(--accent)}
+.tl-item:hover .tl-year{color:var(--amber)}
+.tl-item:hover p{color:var(--ink)}
 .tl-item:last-child::before{
   background:var(--accent);border-color:var(--accent);
   animation:tlPulse 2.2s ease-out infinite;
