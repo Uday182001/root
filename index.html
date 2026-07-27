@@ -435,6 +435,53 @@ main>section.hero{
 .award p{margin:.3rem 0 0;color:var(--muted);font-size:.92rem}
 .award .mark{color:var(--amber);margin-right:.4rem}
 
+/* ---------- timeline thread ---------- */
+.timeline{position:relative;padding-left:2.3rem;max-width:46em}
+.timeline::before{
+  content:"";position:absolute;left:8px;top:10px;bottom:14px;width:2px;
+  border-radius:2px;
+  background:linear-gradient(180deg,var(--amber),var(--accent));
+  transform:scaleY(0);transform-origin:top;
+  transition:transform 1.4s cubic-bezier(.4,0,.2,1) .25s;
+}
+section.in .timeline::before{transform:scaleY(1)}
+.tl-item{
+  position:relative;padding:.5rem 0 1.05rem;
+  opacity:0;transform:translateX(-16px);
+  transition:opacity .5s ease,transform .5s ease;
+}
+section.in .tl-item{opacity:1;transform:none}
+section.in .tl-item:nth-child(1){transition-delay:.35s}
+section.in .tl-item:nth-child(2){transition-delay:.65s}
+section.in .tl-item:nth-child(3){transition-delay:.95s}
+section.in .tl-item:nth-child(4){transition-delay:1.25s}
+.tl-item::before{
+  content:"";position:absolute;left:-2.3rem;top:.95rem;
+  width:12px;height:12px;margin-left:3px;border-radius:50%;
+  background:var(--ground);border:2px solid var(--accent);
+}
+.tl-item:last-child::before{
+  background:var(--accent);border-color:var(--accent);
+  animation:tlPulse 2.2s ease-out infinite;
+}
+@keyframes tlPulse{
+  0%{box-shadow:0 0 0 0 var(--accent-soft)}
+  70%{box-shadow:0 0 0 12px transparent}
+  100%{box-shadow:0 0 0 0 transparent}
+}
+.tl-year{
+  display:block;font-family:ui-monospace,Consolas,monospace;
+  font-size:.72rem;letter-spacing:.14em;color:var(--accent);
+  font-weight:600;margin-bottom:.1rem;
+}
+.tl-item b{font-family:'Fraunces',serif;font-size:1.12rem;font-weight:600}
+.tl-item p{margin:.15rem 0 0;color:var(--muted);font-size:.93rem}
+@media (prefers-reduced-motion: reduce){
+  .timeline::before{transform:none;transition:none}
+  .tl-item{opacity:1;transform:none;transition:none}
+  .tl-item:last-child::before{animation:none}
+}
+
 /* ---------- contact ---------- */
 .contact{
   margin:0;padding:1.6rem 0 2rem;border-top:1px solid var(--line);
@@ -717,30 +764,26 @@ footer{
 
   <section id="education" class="reveal">
     <div class="sec-head"><h2>Where It Started</h2></div>
-    <div class="duo">
-      <div>
-        <div class="award" style="margin-bottom:1.2rem">
-          <b>B.Tech — Computer Science</b>
-          <p>Bharath Institute of Higher Education and Research, Chennai · 2019 – 2023 · CGPA 8.8 / 10</p>
-        </div>
-        <div class="award" style="margin-bottom:1.2rem">
-          <b>Intermediate</b>
-          <p>Sri Chaitanya Educational Institutions, Khammam · 2017 – 2019</p>
-        </div>
-        <div class="award">
-          <b>Schooling — 10th Class (2017)</b>
-          <p>Sri Chaitanya Vidyalayam — where the whole journey began, in my village.</p>
-        </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <span class="tl-year">2017</span>
+        <b>Schooling — 10th Class</b>
+        <p>Sri Chaitanya Vidyalayam — my village, where the journey began.</p>
       </div>
-      <div>
-        <div class="award" style="margin-bottom:1.2rem">
-          <b><span class="mark">🏆</span>Client Appreciation Award</b>
-          <p>For rapid resolution of critical production issues, preventing business disruption.</p>
-        </div>
-        <div class="award">
-          <b><span class="mark">🏆</span>Coach Badge</b>
-          <p>Internally awarded for mentoring junior colleagues on Java and SAP CAP/CDS best practices.</p>
-        </div>
+      <div class="tl-item">
+        <span class="tl-year">2017 – 2019</span>
+        <b>Intermediate</b>
+        <p>Sri Chaitanya Educational Institutions, Khammam.</p>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year">2019 – 2023</span>
+        <b>B.Tech — Computer Science</b>
+        <p>Bharath Institute of Higher Education and Research, Chennai · CGPA 8.8 / 10.</p>
+      </div>
+      <div class="tl-item">
+        <span class="tl-year">2024 – Now</span>
+        <b>Software Developer</b>
+        <p>AsInt, Inc. — where the journey continues.</p>
       </div>
     </div>
   </section>
