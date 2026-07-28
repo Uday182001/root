@@ -253,7 +253,11 @@ main>section.hero{
   padding:0;
 }
 @media (prefers-reduced-motion: reduce){html{scroll-snap-type:none}}
-.sec-head{display:flex;align-items:baseline;gap:1rem;margin-bottom:1.2rem}
+.sec-head{
+  display:flex;align-items:baseline;gap:1rem;margin-bottom:1.2rem;
+  transition:opacity .35s ease;
+}
+section.no-head .sec-head{opacity:0;height:0;margin:0;overflow:hidden}
 .sec-head h2{
   font-family:'Fraunces',serif;font-weight:600;font-size:1.9rem;margin:0;
   text-wrap:balance;
@@ -1008,10 +1012,21 @@ footer{
     if(!current&&window.scrollY<200)current='';
     if((window.innerHeight+window.scrollY)>=document.body.scrollHeight-4)current='contact';
     setActive(current);
+    document.querySelectorAll('section.no-head').forEach(function(s){
+      if(s.id!==current)s.classList.remove('no-head');
+    });
   }
   window.addEventListener('scroll',spy,{passive:true});
   window.addEventListener('resize',spy);
   spy();
+  /* hide a section's heading when it is reached via its nav tab;
+     headings return as soon as the visitor scrolls to it on their own */
+  Object.keys(spyLinks).forEach(function(id){
+    spyLinks[id].addEventListener('click',function(){
+      var sec=document.getElementById(id);
+      if(sec&&sec.querySelector('.sec-head'))sec.classList.add('no-head');
+    });
+  });
   document.getElementById('homeLink').addEventListener('click',function(){
     introPlayed=true;clearTimeout(autoMuteT);
     reel.muted=false;reel.currentTime=0;
