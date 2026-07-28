@@ -377,12 +377,30 @@ section.no-head .sec-head{opacity:0;height:0;margin:0;overflow:hidden}
 .stat span{font-size:.8rem;color:var(--muted);letter-spacing:.04em}
 
 /* ---------- about ---------- */
-.story-body{max-width:44em}
-.story-body p{margin:0 0 1.15em;font-size:1.06rem;line-height:1.78}
-.story-body p:first-child::first-letter{
-  font-family:'Fraunces',serif;font-size:3.1em;float:left;
-  line-height:.82;padding:.04em .12em 0 0;color:var(--accent);font-weight:600;
+.story-grid{display:grid;grid-template-columns:1.65fr 1fr;gap:2.8rem;align-items:start}
+@media (max-width:860px){.story-grid{grid-template-columns:1fr;gap:1.8rem}}
+.story-lead{
+  font-family:'Fraunces',serif;font-weight:600;
+  font-size:clamp(1.5rem,3vw,2.1rem);line-height:1.25;letter-spacing:-.01em;
+  margin:0 0 1.1em;text-wrap:balance;
 }
+.story-lead em{font-style:italic;color:var(--accent)}
+.story-main p{margin:0 0 1.1em;max-width:38em;font-size:1rem;line-height:1.72}
+.story-main p:not(.story-lead){color:var(--muted)}
+.story-main strong{color:var(--ink)}
+.story-traits{
+  border-left:2px solid var(--accent);padding-left:1.5rem;
+}
+.story-traits h4{
+  margin:0 0 1.1rem;font-family:ui-monospace,Consolas,monospace;
+  font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--accent);font-weight:600;
+}
+.story-traits ul{list-style:none;margin:0;padding:0;display:grid;gap:1.05rem}
+.story-traits b{
+  display:block;font-family:'Fraunces',serif;font-size:1.05rem;font-weight:600;
+}
+.story-traits li{font-size:.88rem;color:var(--muted);line-height:1.5}
 
 /* ---------- experience ---------- */
 .xp{
@@ -598,15 +616,6 @@ footer{
   </div>
 </div>
 
-<div class="sky" aria-hidden="true">
-  <div class="cloud c1"></div><div class="cloud c2"></div>
-  <div class="cloud c3"></div><div class="cloud c4"></div>
-  <span class="speck" style="top:25%;left:12%;animation-duration:3.4s"></span>
-  <span class="speck" style="top:70%;left:85%;animation-duration:4.2s"></span>
-  <span class="speck" style="top:50%;left:45%;animation-duration:3.8s"></span>
-  <span class="speck" style="top:85%;left:20%;animation-duration:4.6s"></span>
-</div>
-
 <header>
   <nav class="nav" aria-label="Main">
     <a class="brand" href="#home">Udaykumar<b>&nbsp;Bandi</b></a>
@@ -670,31 +679,37 @@ footer{
 
   <section id="about" class="reveal">
     <div class="sec-head"><h2>My Story</h2></div>
-    <div class="story-body">
-      <p>
-        <strong>Discipline is my default setting.</strong> Long before my first job, I learned
-        that showing up every day, prepared and consistent, beats talent that shows up
-        sometimes. Every arena I've entered has been bigger than the last — and in each one,
-        I've adapted fast, learned faster, and earned trust through delivery.
-      </p>
-      <p>
-        At <strong>AsInt</strong>, I engineer the <strong>Asset Intelligence Suite</strong> —
-        an enterprise platform safeguarding critical <strong>oil &amp; gas</strong>
-        infrastructure, where a software failure is a safety risk, not an inconvenience.
-        I own work across the full stack — Java services, CDS models, OData V4 APIs, tuned
-        SAP HANA Cloud queries — and when critical production issues threatened client
-        operations, I drove the root-cause analysis and the fix. Clients recognized that
-        ownership with a formal <strong>Client Appreciation Award</strong>; my company added
-        its <strong>Coach Badge</strong> for raising the engineers around me.
-      </p>
-      <p>
-        Today I'm proving the same pattern on a new frontier: <strong>Edge Connect</strong>,
-        a bulk data platform I'm building with <strong>Spring Batch</strong>,
-        <strong>RabbitMQ</strong>, <strong>PostgreSQL</strong> and <strong>GCP</strong>.
-        New domain, new stack — mastered on the move, delivered <strong>end to end</strong>.
-        That is what you hire: not a list of tools, but a professional who turns any problem
-        into a system that runs reliably in production.
-      </p>
+    <div class="story-grid">
+      <div class="story-main">
+        <p class="story-lead">I turn hard problems into software that runs
+        <em>reliably in production.</em></p>
+        <p>
+          At <strong>AsInt</strong>, I engineer the <strong>Asset Intelligence Suite</strong> —
+          an enterprise platform safeguarding critical oil &amp; gas infrastructure, where a
+          software failure is a safety risk, not an inconvenience. I deliver across the full
+          stack — Java services, CDS models, OData V4 APIs, tuned SAP HANA Cloud queries —
+          and when critical production issues threatened client operations, I drove the
+          root-cause analysis and the fix. That ownership earned a formal
+          <strong>Client Appreciation Award</strong> from clients, and the
+          <strong>Coach Badge</strong> from my company for raising the engineers around me.
+        </p>
+        <p>
+          Today I'm repeating the pattern on a new frontier — <strong>Edge Connect</strong>,
+          a bulk-data platform built on <strong>Spring Batch</strong>, <strong>RabbitMQ</strong>,
+          <strong>PostgreSQL</strong> and <strong>GCP</strong>. A new stack, mastered on the
+          move, delivered end to end.
+        </p>
+      </div>
+      <aside class="story-traits">
+        <h4>What I Bring</h4>
+        <ul>
+          <li><b>Discipline</b>Consistent delivery, sprint after sprint</li>
+          <li><b>Quick learning</b>Entire stacks mastered on the job</li>
+          <li><b>Adaptability</b>New domains, absorbed without slowing down</li>
+          <li><b>Ownership</b>Production incidents driven to resolution</li>
+          <li><b>Communication</b>The bridge between clients and engineering</li>
+        </ul>
+      </aside>
     </div>
   </section>
 
@@ -903,53 +918,39 @@ footer{
     location.href='mailto:udaykumarbandi6818@gmail.com?subject='+
       encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
   });
-  /* full-screen hero reel — sound on for the first play, then auto-mute */
+  /* full-screen hero reel — every sounded pass mutes itself at the loop end */
   var reel=document.getElementById('heroReel'),
       soundBtn=document.getElementById('soundBtn'),
-      introPlayed=false,autoMuteT=null;
+      soundedOnce=false,prevT=0;
   function setBtn(){soundBtn.classList.toggle('is-muted',reel.muted)}
-  function autoMuteAfterOnePass(){
-    function arm(){
-      clearTimeout(autoMuteT);
-      autoMuteT=setTimeout(function(){
-        if(!introPlayed){introPlayed=true;reel.muted=true;setBtn()}
-      },Math.max(0,(reel.duration-reel.currentTime))*1000+150);
-    }
-    if(isFinite(reel.duration)&&reel.duration>0)arm();
-    else reel.addEventListener('loadedmetadata',arm,{once:true});
-  }
-  function startWithSound(){
-    if(introPlayed)return;
-    reel.muted=false;reel.currentTime=0;setBtn();
+  function unmuteFromStart(){
+    reel.muted=false;reel.currentTime=0;prevT=0;setBtn();
     reel.play().catch(function(){});
-    autoMuteAfterOnePass();
   }
   reel.addEventListener('error',function(){
     document.querySelector('.hero').classList.add('no-video');
     soundBtn.remove();
   });
   /* try unmuted autoplay; if the browser blocks it, start the voice on first interaction */
-  reel.muted=false;
+  reel.muted=false;prevT=0;
   var pp=reel.play();
   if(pp&&pp.then){
-    pp.then(function(){setBtn();autoMuteAfterOnePass()})
+    pp.then(function(){setBtn()})
       .catch(function(){
         reel.muted=true;setBtn();
         reel.play().catch(function(){});
         ['pointerdown','keydown','touchstart'].forEach(function(ev){
           window.addEventListener(ev,function(e){
             if(e.target&&e.target.closest&&e.target.closest('#soundBtn'))return;
-            startWithSound();
+            if(!soundedOnce)unmuteFromStart();
           },{once:true,passive:true});
         });
       });
   }
   soundBtn.addEventListener('click',function(e){
     e.stopPropagation();
-    introPlayed=true;clearTimeout(autoMuteT);
-    reel.muted=!reel.muted;
-    if(!reel.muted){reel.currentTime=0;reel.play().catch(function(){})}
-    setBtn();
+    if(reel.muted){unmuteFromStart()}
+    else{reel.muted=true;setBtn()}
   });
   /* live captions, synced with the intro speech */
   var capEl=document.getElementById('captions'),
@@ -968,6 +969,8 @@ footer{
   }
   reel.addEventListener('timeupdate',function(){
     var t=reel.currentTime,hit=-1;
+    if(t+1<prevT&&!reel.muted){soundedOnce=true;reel.muted=true;setBtn()}
+    prevT=t;
     for(var k=0;k<CUES.length;k++){if(t>=CUES[k][0]&&t<CUES[k][1]){hit=k;break}}
     if(hit===lastCue)return;
     lastCue=hit;
@@ -1029,10 +1032,7 @@ footer{
     });
   });
   document.getElementById('homeLink').addEventListener('click',function(){
-    introPlayed=true;clearTimeout(autoMuteT);
-    reel.muted=false;reel.currentTime=0;
-    reel.play().catch(function(){});
-    setBtn();
+    unmuteFromStart();
   });
 })();
 </script>
